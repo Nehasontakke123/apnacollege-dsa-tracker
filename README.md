@@ -35,6 +35,7 @@ This project was built as part of the **Apna College Assignment** to demonstrate
 - JWT Authentication
 
 ---
+## 📂 Project Structure
 apnacollege-dsa-tracker
 │
 ├── backend
@@ -60,5 +61,5 @@ This project demonstrates how a real-world learning platform can be built using 
 It is designed to showcase both **frontend UI skills** and **backend API architecture** for job and interview evaluations.
 
 
-## 📂 Project Structure
+
 
