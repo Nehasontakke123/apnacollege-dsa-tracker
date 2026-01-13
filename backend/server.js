@@ -22,13 +22,25 @@ connectDB();
 
 const app = express();
 
+/* ---------------- CORS CONFIG ---------------- */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",                       // Local React
+      "http://localhost:3000",
+      "https://apnacollege-dsa-tracker-u7pu.vercel.app", // Vercel frontend
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 /* ---------------- MIDDLEWARES ---------------- */
-app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON requests
 
 /* ---------------- ROUTES ---------------- */
-app.use("/api/auth", authRoutes); // Login / Register
-app.use("/api/topics", topicRoutes); // DSA Topics
+app.use("/api/auth", authRoutes);       // Login / Register
+app.use("/api/topics", topicRoutes);    // DSA Topics
 app.use("/api/progress", progressRoutes); // User Progress
 
 /* ---------------- HEALTH CHECK ---------------- */
