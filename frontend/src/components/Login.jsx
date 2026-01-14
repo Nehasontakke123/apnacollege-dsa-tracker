@@ -6,23 +6,20 @@
 import { useState } from "react";
 import { API } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";   // install: npm i lucide-react
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Handle user login
   const handleLogin = async () => {
     try {
       setLoading(true);
       const res = await API.post("/auth/login", { email, password });
-
-      // Save JWT token
       localStorage.setItem("token", res.data.token);
-
-      // Redirect to dashboard
       navigate("/dashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
@@ -48,12 +45,23 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <input
-          className="border p-3 w-full mt-4 rounded-lg focus:ring-2 focus:ring-blue-500"
-          placeholder="Password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {/* PASSWORD WITH EYE ICON */}
+        <div className="relative mt-4">
+          <input
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-blue-500 pr-10"
+            placeholder="Password"
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-3 text-gray-500 hover:text-blue-600"
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
 
         <button
           onClick={handleLogin}
@@ -74,3 +82,4 @@ export default function Login() {
     </div>
   );
 }
+
